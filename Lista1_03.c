@@ -7,7 +7,6 @@
 #include<locale.h>
 
 
-
 int main(){
     setlocale(LC_ALL,"Portuguese");
 
@@ -24,8 +23,10 @@ int main(){
     scanf("%f", &numFloat);
     printf("\nInsira um outro número real: ");
     scanf("%lf", &numDouble);
+    fflush(stdin); //limpa o buffer do teclado
     printf("\nInsira uma letra: ");
     scanf("%c", &umaLetra);
+    fflush(stdin);
     printf("\nInsira uma string: ");
     fgets(umaString, 100, stdin);
 
