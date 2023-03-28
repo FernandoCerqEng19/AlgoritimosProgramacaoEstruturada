@@ -4,18 +4,18 @@
 
 int main(){
 
-    char sexo;      //1 byte alocado na memória (somente 1 caractere)
-    char nome[15];  //10 bytes alocados na memória (10 caracteres) #locação estática (endereços sequenciais)
+    char nome[15], sobrenome[15];  //10 bytes alocados na memória (15 caracteres) #locação estática (endereços sequenciais)
+    int quantidadeCaracteres; //quantidade de caracteres
 
     printf("Insira o seu primeiro nome: ");
     gets(nome);
     fflush(stdin);
-    printf("\nInsira sua sexualidade(F ou M): ");
-    scanf("%c", &sexo);
+    printf("Insira o seu sobrenome: ");
+    gets(sobrenome);
 
-    printf("\nNome: %s", nome);
-    printf("\nSexualidade: %c", sexo);
-    printf("\nQuantidade de caracteres: %i", strlen(nome));
+    quantidadeCaracteres = (strlen(nome) + strlen(sobrenome));
+    printf("\nNome: %s %s", nome, sobrenome);
+    printf("\nQuantidade de caracteres: %i", quantidadeCaracteres);
     
     // strlen(nome); //função que retorna o tamanho da string armazenada, sem \0. o parâmetro é o nome da variável.
     
