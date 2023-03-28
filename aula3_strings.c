@@ -1,6 +1,6 @@
 #include<stdio.h> //biblioteca de entrada e saída de dados
 #include<locale.h>
-#include<string.h>//biblioteca de funções de strings
+#include<string.h>//biblioteca para manipulação de strings
 
 int main(){
 
