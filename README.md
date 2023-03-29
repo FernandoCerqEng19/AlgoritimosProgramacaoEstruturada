@@ -1,10 +1,10 @@
 # Algoritimo e Programação Estruturada
 
-## Tutorial
+## Repositório Acadêmico
 
-### Configurar Usuário no Git
+### Comentários
 ```
 
-$ git config --global user.name "Nome Sobrenome"
-$ git config --global user.email nomesobrenome@email.com
+$ Algorítimos em C
+$ Fernando Coelho de Cerqueira
 ```
