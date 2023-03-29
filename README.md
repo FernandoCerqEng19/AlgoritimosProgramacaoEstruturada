@@ -6,5 +6,5 @@
 ```
 
 $ Algorítimos em C
-$ Fernando Coelho de Cerqueira
+$ Fernando Coelho de Cerqueira 
 ```
