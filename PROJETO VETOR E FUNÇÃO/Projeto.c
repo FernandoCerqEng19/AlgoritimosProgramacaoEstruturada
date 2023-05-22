@@ -33,69 +33,73 @@ void incluirUsuario() {
     int id = gerarNumeroAleatorio(1000, 9999);
     ids[numUsuarios] = id;
 
-    printf("Digite o nome completo: ");
+    printf("\nDigite o nome completo: ");
     fgets(nomes[numUsuarios], MAX_STRING_LENGTH, stdin);
     nomes[numUsuarios][strcspn(nomes[numUsuarios], "\n")] = '\0'; // Remove o caractere de nova linha
 
-    printf("Digite o email: ");
-    fgets(emails[numUsuarios], MAX_STRING_LENGTH, stdin);
-    emails[numUsuarios][strcspn(emails[numUsuarios], "\n")] = '\0';
+    do{
+        printf("\nDigite o email: ");
+        fgets(emails[numUsuarios], MAX_STRING_LENGTH, stdin);
+        emails[numUsuarios][strcspn(emails[numUsuarios], "\n")] = '\0';
+    }while (strchr(emails[numUsuarios], '@') == NULL);
 
-    printf("Digite o sexo (Feminino, Masculino, Outro): ");
+    printf("\nDigite o sexo (Feminino, Masculino, Indiferente): ");
     fgets(sexos[numUsuarios], MAX_STRING_LENGTH, stdin);
     sexos[numUsuarios][strcspn(sexos[numUsuarios], "\n")] = '\0';
 
-    printf("Digite o endereco: ");
+    printf("\nDigite o endereco: ");
     fgets(enderecos[numUsuarios], MAX_STRING_LENGTH, stdin);
     enderecos[numUsuarios][strcspn(enderecos[numUsuarios], "\n")] = '\0';
 
-    printf("Digite a altura (entre 1 e 2 metros): ");
+    printf("\nDigite a altura (entre 1 e 2 metros): ");
     scanf("%lf", &alturas[numUsuarios]);
     getchar();
 
-    printf("Recebeu a vacina? (1 para sim, 0 para não): ");
+    printf("\nRecebeu a vacina? (1 para sim, 0 para nao): ");
     scanf("%d", &vacinas[numUsuarios]);
     getchar();
 
     numUsuarios++;
 
-    printf("Usuario cadastrado com sucesso!\n\n");
+    printf("\nUsuario cadastrado com sucesso!\n\n");
 }
 
 void editarUsuario() {
     int id;
-    printf("Digite o ID do usuario que deseja editar: ");
+    printf("\nDigite o ID do usuario que deseja editar: ");
     scanf("%d", &id);
     getchar();
 
     int i;
     for (i = 0; i < numUsuarios; i++) {
         if (ids[i] == id) {
-            printf("Digite o novo nome completo: ");
+            printf("\nDigite o novo nome completo: ");
             fgets(nomes[i], MAX_STRING_LENGTH, stdin);
             nomes[i][strcspn(nomes[i], "\n")] = '\0';
 
-            printf("Digite o novo email: ");
-            fgets(emails[i], MAX_STRING_LENGTH, stdin);
-            emails[i][strcspn(emails[i], "\n")] = '\0';
+            do{
+                printf("\nDigite o novo email: ");
+                fgets(emails[i], MAX_STRING_LENGTH, stdin);
+                emails[i][strcspn(emails[i], "\n")] = '\0';
+            }while (strchr(emails[i], '@') == NULL);
 
-            printf("Digite o novo sexo (Feminino, Masculino, Outro): ");
+            printf("\nDigite o novo sexo (Feminino, Masculino, Indiferente): ");
             fgets(sexos[i], MAX_STRING_LENGTH, stdin);
             sexos[i][strcspn(sexos[i], "\n")] = '\0';
 
-            printf("Digite o novo endereco: ");
+            printf("\nDigite o novo endereco: ");
             fgets(enderecos[i], MAX_STRING_LENGTH, stdin);
             enderecos[i][strcspn(enderecos[i], "\n")] = '\0';
 
-            printf("Digite a nova altura (entre 1 e 2 metros): ");
+            printf("\nDigite a nova altura (entre 1 e 2 metros): ");
             scanf("%lf", &alturas[i]);
             getchar();
 
-            printf("Recebeu a vacina? (1 para sim, 0 para não): ");
+            printf("\nRecebeu a vacina? (1 para sim, 0 para nao): ");
             scanf("%d", &vacinas[i]);
             getchar();
 
-            printf("Usuario editado com sucesso!\n\n");
+            printf("\nUsuario editado com sucesso!\n\n");
             return;
         }
     }
@@ -105,7 +109,7 @@ void editarUsuario() {
 
 void excluirUsuario() {
     int id;
-    printf("Digite o ID do usuario que deseja excluir: ");
+    printf("\nDigite o ID do usuario que deseja excluir: ");
     scanf("%d", &id);
     getchar();
 
@@ -125,35 +129,35 @@ void excluirUsuario() {
 
             numUsuarios--;
 
-            printf("Usuario excluido com sucesso!\n\n");
+            printf("\nUsuario excluido com sucesso!\n\n");
             return;
         }
     }
 
-    printf("Usuario não encontrado.\n\n");
+    printf("\nUsuario não encontrado.\n\n");
 }
 
 void buscarUsuario() {
     char email[MAX_STRING_LENGTH];
-    printf("Digite o email do usuario que deseja buscar: ");
+    printf("\nDigite o email do usuario que deseja buscar: ");
     fgets(email, MAX_STRING_LENGTH, stdin);
     email[strcspn(email, "\n")] = '\0';
 
     int i;
     for (i = 0; i < numUsuarios; i++) {
         if (strcmp(emails[i], email) == 0) {
-            printf("Usuario encontrado:\n");
+            printf("\nUsuario encontrado:\n");
             imprimirUsuario(i);
             return;
         }
     }
 
-    printf("Usuario não encontrado.\n\n");
+    printf("\nUsuario não encontrado.\n\n");
 }
 
 void imprimirUsuarios() {
     int i;
-    printf("Lista de Usuarios:\n");
+    printf("\nLista de Usuarios:\n");
     for (i = 0; i < numUsuarios; i++) {
         imprimirUsuario(i);
     }
@@ -164,7 +168,7 @@ void fazerBackup() {
     arquivo = fopen("backup.txt", "w");
 
     if (arquivo == NULL) {
-        printf("Erro ao criar o arquivo de backup.\n\n");
+        printf("\nErro ao criar o arquivo de backup.\n\n");
         return;
     }
 
@@ -175,7 +179,7 @@ void fazerBackup() {
 
     fclose(arquivo);
 
-    printf("Backup realizado com sucesso!\n\n");
+    printf("\nBackup realizado com sucesso!\n\n");
 }
 
 void restaurarDados() {
@@ -183,7 +187,7 @@ void restaurarDados() {
     arquivo = fopen("backup.txt", "r");
 
     if (arquivo == NULL) {
-        printf("Arquivo de backup não encontrado.\n\n");
+        printf("\nArquivo de backup não encontrado.\n\n");
         return;
     }
 
@@ -195,7 +199,7 @@ void restaurarDados() {
 
     fclose(arquivo);
 
-    printf("Dados restaurados com sucesso!\n\n");
+    printf("\nDados restaurados com sucesso!\n\n");
 }
 
 int main() {
@@ -212,7 +216,7 @@ int main() {
         printf("6. Fazer backup dos usuarios cadastrados\n");
         printf("7. Restaurar dados\n");
         printf("0. Sair\n");
-        printf("Opcao: ");
+        printf("\nOpcao: ");
         scanf("%c", &opcao);
         getchar();
 
