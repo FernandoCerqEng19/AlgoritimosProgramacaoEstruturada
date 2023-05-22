@@ -150,3 +150,12 @@ void buscarUsuario() {
 
     printf("Usuario não encontrado.\n\n");
 }
+
+void imprimirUsuarios() {
+    int i;
+    printf("Lista de Usuarios:\n");
+    for (i = 0; i < numUsuarios; i++) {
+        imprimirUsuario(i);
+    }
+}
+
