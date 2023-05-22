@@ -159,3 +159,41 @@ void imprimirUsuarios() {
     }
 }
 
+void fazerBackup() {
+    FILE *arquivo;
+    arquivo = fopen("backup.txt", "w");
+
+    if (arquivo == NULL) {
+        printf("Erro ao criar o arquivo de backup.\n\n");
+        return;
+    }
+
+    int i;
+    for (i = 0; i < numUsuarios; i++) {
+        fprintf(arquivo, "%d,%s,%s,%s,%s,%.2f,%d\n", ids[i], nomes[i], emails[i], sexos[i], enderecos[i], alturas[i], vacinas[i]);
+    }
+
+    fclose(arquivo);
+
+    printf("Backup realizado com sucesso!\n\n");
+}
+
+void restaurarDados() {
+    FILE *arquivo;
+    arquivo = fopen("backup.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Arquivo de backup não encontrado.\n\n");
+        return;
+    }
+
+    numUsuarios = 0;
+    while (!feof(arquivo) && numUsuarios < MAX_USERS) {
+        fscanf(arquivo, "%d,%[^,],%[^,],%[^,],%[^,],%lf,%d\n", &ids[numUsuarios], nomes[numUsuarios], emails[numUsuarios], sexos[numUsuarios], enderecos[numUsuarios], &alturas[numUsuarios], &vacinas[numUsuarios]);
+        numUsuarios++;
+    }
+
+    fclose(arquivo);
+
+    printf("Dados restaurados com sucesso!\n\n");
+}
