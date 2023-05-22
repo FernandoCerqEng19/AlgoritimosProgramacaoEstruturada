@@ -62,3 +62,44 @@ void incluirUsuario() {
     printf("Usuario cadastrado com sucesso!\n\n");
 }
 
+void editarUsuario() {
+    int id;
+    printf("Digite o ID do usuario que deseja editar: ");
+    scanf("%d", &id);
+    getchar();
+
+    int i;
+    for (i = 0; i < numUsuarios; i++) {
+        if (ids[i] == id) {
+            printf("Digite o novo nome completo: ");
+            fgets(nomes[i], MAX_STRING_LENGTH, stdin);
+            nomes[i][strcspn(nomes[i], "\n")] = '\0';
+
+            printf("Digite o novo email: ");
+            fgets(emails[i], MAX_STRING_LENGTH, stdin);
+            emails[i][strcspn(emails[i], "\n")] = '\0';
+
+            printf("Digite o novo sexo (Feminino, Masculino, Outro): ");
+            fgets(sexos[i], MAX_STRING_LENGTH, stdin);
+            sexos[i][strcspn(sexos[i], "\n")] = '\0';
+
+            printf("Digite o novo endereco: ");
+            fgets(enderecos[i], MAX_STRING_LENGTH, stdin);
+            enderecos[i][strcspn(enderecos[i], "\n")] = '\0';
+
+            printf("Digite a nova altura (entre 1 e 2 metros): ");
+            scanf("%lf", &alturas[i]);
+            getchar();
+
+            printf("Recebeu a vacina? (1 para sim, 0 para não): ");
+            scanf("%d", &vacinas[i]);
+            getchar();
+
+            printf("Usuario editado com sucesso!\n\n");
+            return;
+        }
+    }
+
+    printf("Usuario não encontrado.\n\n");
+}
+
