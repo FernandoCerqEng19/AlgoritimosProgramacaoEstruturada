@@ -103,3 +103,50 @@ void editarUsuario() {
     printf("Usuario não encontrado.\n\n");
 }
 
+void excluirUsuario() {
+    int id;
+    printf("Digite o ID do usuario que deseja excluir: ");
+    scanf("%d", &id);
+    getchar();
+
+    int i;
+    for (i = 0; i < numUsuarios; i++) {
+        if (ids[i] == id) {
+            int j;
+            for (j = i; j < numUsuarios - 1; j++) {
+                ids[j] = ids[j + 1];
+                strcpy(nomes[j], nomes[j + 1]);
+                strcpy(emails[j], emails[j + 1]);
+                strcpy(sexos[j], sexos[j + 1]);
+                strcpy(enderecos[j], enderecos[j + 1]);
+                alturas[j] = alturas[j + 1];
+                vacinas[j] = vacinas[j + 1];
+            }
+
+            numUsuarios--;
+
+            printf("Usuario excluido com sucesso!\n\n");
+            return;
+        }
+    }
+
+    printf("Usuario não encontrado.\n\n");
+}
+
+void buscarUsuario() {
+    char email[MAX_STRING_LENGTH];
+    printf("Digite o email do usuario que deseja buscar: ");
+    fgets(email, MAX_STRING_LENGTH, stdin);
+    email[strcspn(email, "\n")] = '\0';
+
+    int i;
+    for (i = 0; i < numUsuarios; i++) {
+        if (strcmp(emails[i], email) == 0) {
+            printf("Usuario encontrado:\n");
+            imprimirUsuario(i);
+            return;
+        }
+    }
+
+    printf("Usuario não encontrado.\n\n");
+}
