@@ -37,11 +37,11 @@ void incluirUsuario() {
     fgets(nomes[numUsuarios], MAX_STRING_LENGTH, stdin);
     nomes[numUsuarios][strcspn(nomes[numUsuarios], "\n")] = '\0'; // Remove o caractere de nova linha
 
-    do{
+    do {
         printf("\nDigite o email: ");
         fgets(emails[numUsuarios], MAX_STRING_LENGTH, stdin);
         emails[numUsuarios][strcspn(emails[numUsuarios], "\n")] = '\0';
-    }while (strchr(emails[numUsuarios], '@') == NULL);
+    } while (strchr(emails[numUsuarios], '@') == NULL);
 
     printf("\nDigite o sexo (Feminino, Masculino, Indiferente): ");
     fgets(sexos[numUsuarios], MAX_STRING_LENGTH, stdin);
@@ -77,11 +77,11 @@ void editarUsuario() {
             fgets(nomes[i], MAX_STRING_LENGTH, stdin);
             nomes[i][strcspn(nomes[i], "\n")] = '\0';
 
-            do{
+            do {
                 printf("\nDigite o novo email: ");
                 fgets(emails[i], MAX_STRING_LENGTH, stdin);
                 emails[i][strcspn(emails[i], "\n")] = '\0';
-            }while (strchr(emails[i], '@') == NULL);
+            } while (strchr(emails[i], '@') == NULL);
 
             printf("\nDigite o novo sexo (Feminino, Masculino, Indiferente): ");
             fgets(sexos[i], MAX_STRING_LENGTH, stdin);
@@ -104,7 +104,7 @@ void editarUsuario() {
         }
     }
 
-    printf("Usuario não encontrado.\n\n");
+    printf("Usuario nao encontrado.\n\n");
 }
 
 void excluirUsuario() {
@@ -134,7 +134,7 @@ void excluirUsuario() {
         }
     }
 
-    printf("\nUsuario não encontrado.\n\n");
+    printf("\nUsuario nao encontrado.\n\n");
 }
 
 void buscarUsuario() {
@@ -152,7 +152,7 @@ void buscarUsuario() {
         }
     }
 
-    printf("\nUsuario não encontrado.\n\n");
+    printf("\nUsuario nao encontrado.\n\n");
 }
 
 void imprimirUsuarios() {
@@ -163,41 +163,32 @@ void imprimirUsuarios() {
     }
 }
 
-void fazerBackup() {
-    FILE *arquivo;
-    arquivo = fopen("backup.txt", "w");
-
-    if (arquivo == NULL) {
-        printf("\nErro ao criar o arquivo de backup.\n\n");
-        return;
-    }
-
+void fazerBackup(int ids_backup[], char nomes_backup[][MAX_STRING_LENGTH], char emails_backup[][MAX_STRING_LENGTH], char sexos_backup[][MAX_STRING_LENGTH], char enderecos_backup[][MAX_STRING_LENGTH], double alturas_backup[], int vacinas_backup[]) {
     int i;
     for (i = 0; i < numUsuarios; i++) {
-        fprintf(arquivo, "%d,%s,%s,%s,%s,%.2f,%d\n", ids[i], nomes[i], emails[i], sexos[i], enderecos[i], alturas[i], vacinas[i]);
+        ids_backup[i] = ids[i];
+        strcpy(nomes_backup[i], nomes[i]);
+        strcpy(emails_backup[i], emails[i]);
+        strcpy(sexos_backup[i], sexos[i]);
+        strcpy(enderecos_backup[i], enderecos[i]);
+        alturas_backup[i] = alturas[i];
+        vacinas_backup[i] = vacinas[i];
     }
-
-    fclose(arquivo);
 
     printf("\nBackup realizado com sucesso!\n\n");
 }
 
-void restaurarDados() {
-    FILE *arquivo;
-    arquivo = fopen("backup.txt", "r");
-
-    if (arquivo == NULL) {
-        printf("\nArquivo de backup não encontrado.\n\n");
-        return;
+void restaurarDados(const int ids_backup[], const char nomes_backup[][MAX_STRING_LENGTH], const char emails_backup[][MAX_STRING_LENGTH], const char sexos_backup[][MAX_STRING_LENGTH], const char enderecos_backup[][MAX_STRING_LENGTH], const double alturas_backup[], const int vacinas_backup[]) {
+    int i;
+    for (i = 0; i < numUsuarios; i++) {
+        ids[i] = ids_backup[i];
+        strcpy(nomes[i], nomes_backup[i]);
+        strcpy(emails[i], emails_backup[i]);
+        strcpy(sexos[i], sexos_backup[i]);
+        strcpy(enderecos[i], enderecos_backup[i]);
+        alturas[i] = alturas_backup[i];
+        vacinas[i] = vacinas_backup[i];
     }
-
-    numUsuarios = 0;
-    while (!feof(arquivo) && numUsuarios < MAX_USERS) {
-        fscanf(arquivo, "%d,%[^,],%[^,],%[^,],%[^,],%lf,%d\n", &ids[numUsuarios], nomes[numUsuarios], emails[numUsuarios], sexos[numUsuarios], enderecos[numUsuarios], &alturas[numUsuarios], &vacinas[numUsuarios]);
-        numUsuarios++;
-    }
-
-    fclose(arquivo);
 
     printf("\nDados restaurados com sucesso!\n\n");
 }
@@ -206,6 +197,15 @@ int main() {
     srand(time(NULL));
 
     char opcao;
+    int ids_backup[MAX_USERS];
+    char nomes_backup[MAX_USERS][MAX_STRING_LENGTH];
+    char emails_backup[MAX_USERS][MAX_STRING_LENGTH];
+    char sexos_backup[MAX_USERS][MAX_STRING_LENGTH];
+    char enderecos_backup[MAX_USERS][MAX_STRING_LENGTH];
+    double alturas_backup[MAX_USERS];
+    int vacinas_backup[MAX_USERS];
+    int numUsuarios_backup = 0;
+
     do {
         printf("Selecione uma opcao:\n");
         printf("1. Incluir usuario\n");
@@ -237,10 +237,16 @@ int main() {
                 imprimirUsuarios();
                 break;
             case '6':
-                fazerBackup();
+                fazerBackup(ids_backup, nomes_backup, emails_backup, sexos_backup, enderecos_backup, alturas_backup, vacinas_backup);
+                numUsuarios_backup = numUsuarios;
                 break;
             case '7':
-                restaurarDados();
+                if (numUsuarios_backup > 0) {
+                    restaurarDados(ids_backup, nomes_backup, emails_backup, sexos_backup, enderecos_backup, alturas_backup, vacinas_backup);
+                    numUsuarios = numUsuarios_backup;
+                } else {
+                    printf("\nNao ha dados de backup disponiveis.\n\n");
+                }
                 break;
             case '0':
                 printf("Encerrando o programa.\n");
