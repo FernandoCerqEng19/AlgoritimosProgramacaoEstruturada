@@ -236,6 +236,9 @@ void imprimirUsuariosCadastrados() {
     } 
     else {
         printf("Usuarios cadastrados: %d\n", numUsuarios);
+
+        printf("\n....................\n\n");
+        
         int i;
         for (i = 0; i < numUsuarios; i++) {
             printf("ID: %d\n", usuarios[i].id);
