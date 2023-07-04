@@ -23,7 +23,7 @@ void cadastrarUsuario(Usuario **usuarios, int *numUsuarios) {
     // nova variável de tipo Usuário, para armazenar os dados do novo usuário a ser cadastrado
     Usuario *novoUsuario = (Usuario*) malloc(sizeof(Usuario));
 
-    // Verifica se a alocação foi bem-sucedida
+    // verifica se a alocação foi bem-sucedida
     if(novoUsuario == NULL) {
         printf("Erro ao armazenar usuário.\n");
         return;
@@ -32,34 +32,41 @@ void cadastrarUsuario(Usuario **usuarios, int *numUsuarios) {
     novoUsuario->id = gerarID(); // chama a função e gera um ID aleatório para esse usuário específico
     
     printf("Nome completo: ");
-    fgets(novoUsuario->nome, sizeof(novoUsuario->nome), stdin); // A função sizeof() retorna o tamanho do campo "nome" para garantir que a entrada não exceda esse tamanho.
+    fgets(novoUsuario->nome, sizeof(novoUsuario->nome), stdin); // função sizeof() retorna o tamanho do campo "nome" para garantir que a entrada não exceda esse tamanho.
     novoUsuario->nome[strcspn(novoUsuario->nome, "\n")] = '\0'; // remove o caractere de nova linha ('\n') do final da string
     
     printf("Email: ");
     fgets(novoUsuario->email, sizeof(novoUsuario->email), stdin);
     novoUsuario->email[strcspn(novoUsuario->email, "\n")] = '\0';  
     
-    do{
-        printf("Email invalido. Tente novamente.\n");
-        printf("\n....................\n\n");
-        printf("Email: ");
-        fgets(novoUsuario->email, sizeof(novoUsuario->email), stdin);
-        novoUsuario->email[strcspn(novoUsuario->email, "\n")] = '\0'; 
-    } while (strstr(novoUsuario->email, "@") == NULL);
+    if(strstr(novoUsuario->email, "@") == NULL){
+
+        do{
+            printf("Email invalido. Tente novamente.\n");
+            printf("\n....................\n\n");
+            printf("Email: ");
+            fgets(novoUsuario->email, sizeof(novoUsuario->email), stdin);
+            novoUsuario->email[strcspn(novoUsuario->email, "\n")] = '\0'; 
+        } while (strstr(novoUsuario->email, "@") == NULL);
+
+    }
     
     printf("Sexo: (Feminino, Masculino ou Indiferente): ");
     fgets(novoUsuario->sexo, sizeof(novoUsuario->sexo), stdin);
     novoUsuario->sexo[strcspn(novoUsuario->sexo, "\n")] = '\0';
 
-    do{
-        printf("Sexo invalido. Tente novamente.\n");
-        printf("\n....................\n\n");
-        printf("Sexo: (Feminino, Masculino ou Indiferente): ");
-        fgets(novoUsuario->sexo, sizeof(novoUsuario->sexo), stdin);
-        novoUsuario->sexo[strcspn(novoUsuario->sexo, "\n")] = '\0';
-    // compara as strings "strcmp"
-    }while (strcmp(novoUsuario->sexo, "Feminino") != 0 && strcmp(novoUsuario->sexo, "Masculino") != 0 && strcmp(novoUsuario->sexo, "Indiferente") != 0);
-      
+    if((strcmp(novoUsuario->sexo, "Feminino") != 0 && strcmp(novoUsuario->sexo, "Masculino") != 0 && strcmp(novoUsuario->sexo, "Indiferente") != 0)){
+        do{
+            printf("Sexo invalido. Tente novamente.\n");
+            printf("\n....................\n\n");
+            printf("Sexo: (Feminino, Masculino ou Indiferente): ");
+            fgets(novoUsuario->sexo, sizeof(novoUsuario->sexo), stdin);
+            novoUsuario->sexo[strcspn(novoUsuario->sexo, "\n")] = '\0';
+            // compara as strings "strcmp"
+        }while (strcmp(novoUsuario->sexo, "Feminino") != 0 && strcmp(novoUsuario->sexo, "Masculino") != 0 && strcmp(novoUsuario->sexo, "Indiferente") != 0);
+
+    }
+    
     printf("Endereco: ");
     fgets(novoUsuario->endereco, sizeof(novoUsuario->endereco), stdin);
     novoUsuario->endereco[strcspn(novoUsuario->endereco, "\n")] = '\0';
@@ -68,13 +75,10 @@ void cadastrarUsuario(Usuario **usuarios, int *numUsuarios) {
     scanf("%lf", &novoUsuario->altura);
     getchar();
 
-    do{
-        printf("Altura inválida. Tente novamente.\n");
-        printf("\n....................\n\n");
-        printf("Sexo: (Feminino, Masculino ou Indiferente): ");
-        fgets(novoUsuario->sexo, sizeof(novoUsuario->sexo), stdin);
-        novoUsuario->sexo[strcspn(novoUsuario->sexo, "\n")] = '\0';
-    }while (novoUsuario->altura < 1 || novoUsuario->altura > 2);
+    if (novoUsuario->altura < 1 || novoUsuario->altura > 2) {
+        printf("Altura invalida. Tente novamente.\n");
+        return;
+    }
     
     printf("Vacina (1 - Sim, 0 - Nao): ");
     scanf("%d", &novoUsuario->vacina);

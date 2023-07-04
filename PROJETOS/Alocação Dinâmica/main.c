@@ -2,7 +2,7 @@
 #include <stdlib.h> // biblioteca que contém funções para alocação de memória
 #include <string.h> // biblioteca de manipulação de strings
 #include <time.h>   // biblioteca para trabalhar com srand (funções que mexem com tempo real)
-#include "funcoes.h"
+#include "funcoes.h" // biblioteca local
 
 int main() {
     
